@@ -1,9 +1,8 @@
 FROM ubuntu:latest
 
-RUN useradd -m -d /home/${user} ${user} && \
-    chown -R ${user} /home/${user} && \
-    adduser ${user} sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN mkdir /code
+WORKDIR /code
+ENV PORT 80
 
 RUN apt-get update && \
     apt-get upgrade -y && \
