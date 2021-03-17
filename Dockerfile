@@ -1,5 +1,10 @@
 FROM ubuntu:latest
 
+RUN useradd -m -d /home/${user} ${user} && \
+    chown -R ${user} /home/${user} && \
+    adduser ${user} sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y  software-properties-common && \
