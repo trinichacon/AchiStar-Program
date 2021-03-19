@@ -1,7 +1,15 @@
-FROM ubuntu:latest
+FROM maven:latest
+ENV APP_HOME=/app/
 
-COPY /var/lib/jenkins/workspace/AchiStar-Program/target/my-app-1.0-SNAPSHOT.jar /usr/local/lib/demo.jar
+COPY pom.xml $APP_HOME
+COPY src $APP_HOME/src/
+WORKDIR $APP_HOME
 
-EXPOSE 8080
+RUN mvn package -DskipTests
+ENV JAR_FILE=target/my-app-1.0-SNAPSHOT.jar
+COPY ${JAR_FILE} /app.jar
 
-ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+EXPOSE 8300
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
